@@ -1,0 +1,107 @@
+.panel {
+  margin-top: 50px;
+}
+
+.table-tittle {
+  font-size: 20px;
+  text-align: center;
+  color: #777;
+}
+
+table {
+  width: 100%;
+}
+
+th.tittle-name  {
+  color : #777;
+  text-align: center;
+  width: 50%;
+}
+th.tittle-userid {
+  color : #777;
+  text-align: center;
+  width: 25%;
+}
+th.tittle-panels {
+  color : #777;
+  text-align: center;
+  width: 25%;
+}
+td.content-name {
+  text-align: center;
+  width: 50%;
+}
+td.content-userid {
+  text-align: center;
+  width: 25%;
+}
+td.content-panels {
+  text-align: center;
+  width: 25%;
+}
+
+th.tittle-panelid {
+  color : #777;
+  text-align: center;
+  width: 50%;
+}
+th.tittle-location {
+  color : #777;
+  text-align: center;
+  width: 50%;
+}
+td.content-panelid {
+  text-align: center;
+  width: 50%;
+}
+td.content-location {
+  text-align: center;
+  width: 50%;
+}
+
+th.tittle-time {
+  color : #777;
+  text-align: left;
+  width: 20%;
+}
+th.tittle-temperature {
+  color : #777;
+  text-align: center;
+  width: 20%;
+}
+th.tittle-network {
+  color : #777;
+  text-align: center;
+  width: 20%;
+}
+th.tittle-panel {
+  color : #777;
+  text-align: center;
+  width: 20%;
+}
+th.tittle-used {
+  color : #777;
+  text-align: center;
+  width: 20%;
+}
+
+td.content-time {
+  text-align: center;
+  width: 30%;
+}
+td.content-temperature {
+  text-align: center;
+  width: 20%;
+}
+td.content-network {
+  text-align: center;
+  width: 20%;
+}
+td.content-panel {
+  text-align: center;
+  width: 20%;
+}
+td.content-used {
+  text-align: center;
+  width: 20%;
+}

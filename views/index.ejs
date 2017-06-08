@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <title>sda-front</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-resource.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
+
+    <script src="js/sda.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+  </head>
+
+  <body>
+    <div id="catt" class="container" ng-app="app-sda">
+      <div class="row" ng-controller="controlle-sda">
+
+        <div class="col-md-6 col-md-offset-3 panel">
+
+          <h1 class="table-tittle"> List of Clients </h1>
+          <table>
+            <tr>
+              <th class="tittle-name">Name</th>
+              <th class="tittle-userid">userid</th>
+              <th class="tittle-panels">Panels</th>
+            </tr>
+            <tr ng-repeat="client in clients">
+              <td class="content-name" ng-click="selectClient(client)"> {{client.name}}</td>
+              <td class="content-userid">{{client.userid}}</td>
+              <td class="content-panels">{{client.panels.length}}</td>
+            </tr>
+          </table>
+
+        </div>
+
+        <div class="col-md-6 col-md-offset-3 panel" ng-show='panel_list_show'>
+          <h1 class="table-tittle"> List of Panels for {{selected_client.name}} </h1>
+
+          <table>
+            <tr>
+              <th class="tittle-panelid">Panel ID</th>
+              <th class="tittle-location">Location</th>
+            </tr>
+            <tr ng-repeat="panel in panels">
+              <td class="content-panelid" ng-click="selectPanel(panel)"> {{panel.panelid}}</td>
+              <td class="content-location">{{panel.location}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="row" ng-show='read_list_show'>
+          <dic class="col-md-6 col-md-offset-3 panel">
+          <div class="w3-container w3-white w3-padding-64 w3-small w3-border w3-border-grey" id="menu">
+            <div class="w3-content">
+
+              <h1 class="w3-center w3-largex" style="margin:40px">Your Information</h1>
+              <div class="w3-row w3-center w3-border w3-border-grey">
+                <a href="javascript:void(0)" onclick="openMenu(event, 'All');" id="myLink">
+                  <div class="w3-col s4 tablink w3-padding-large w3-hover-red">General</div>
+                </a>
+                <a href="javascript:void(0)" onclick="openMenu(event, 'Prmedio');">
+                  <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Average</div>
+                </a>
+                <a href="javascript:void(0)" onclick="openMenu(event, 'Day');">
+                  <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Daily</div>
+                </a>
+              </div>
+              <div id="All" class="w3-container menu w3-padding-32 w3-white">
+                <h1><b>Datos generales</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h1>
+                <h2><b>Hora de mayor consumo</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                <div id='timm' class="w3-text-grey"></div>
+                <h2><b>Temperatura</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                <div id='tempe' class="w3-text-grey"></div>
+                <h2><b>Potencia Promedio Generada</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                <div id='pot' class="w3-text-grey"></div>
+                </div>
+
+                <div id="Prmedio" class="w3-container menu w3-padding-32 w3-white">
+                  <h1><b>Corrient Promedio </b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h1>
+                  <h2><b>Corrient Promedio Usada</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                  <div id='getavera' class="w3-text-grey"></div>
+                  <h2><b>Corrient Promedio Red Electrica</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                  <div id='getnet' class="w3-text-grey"></div>
+                  <h2><b>Corrient Promedio Panel</b> <span class="w3-right w3-tag w3-dark-grey w3-round"></span></h2>
+                  <div id='getpan' class="w3-text-grey"></div>
+
+                </div><br>
+
+
+              <div id="Day" class="w3-container menu w3-padding-32 w3-white">
+                <div ng-show='read_list_show'>
+              <div class="col-md-10 col-md-offset-1 panel">
+                <canvas
+                  id="line"
+                  width="1000"
+                  height="300"
+                  class="chart chart-line"
+                  chart-data="gr_data"
+                  chart-colors="gr_color"
+                  chart-labels="gr_labels"
+                  chart-series="gr_series"
+                  chart-options="gr_options"
+                  chart-dataset-override="datasetOverride" >
+                </canvas>
+              </div>
+                <div class="col-md-4 col-md-offset-2 panel">
+                  <table>
+                    <tr>
+                      <th class="tittle-panelid">Time</th>
+                      <!-- <th class="tittle-radiation">Radiation</th> -->
+                      <th class="tittle-temperature">Temperature</th>
+                      <th class="tittle-network">Network</th>
+                      <th class="tittle-panel">Panel</th>
+                      <th class="tittle-used">Used</th>
+
+                    </tr>
+                    <tr ng-repeat="read in reads">
+                      <th class="content-time">{{read.time}}</th>
+                      <th class="content-temperature">{{read.temperature | number:2 }}</th>
+                      <th class="content-network">{{read.current.network | number:2 }}</th>
+                      <th class="content-panel">{{read.current.panel | number:2 }}</th>
+                      <th class="content-used">{{read.current.used | number:2 }}</th>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="col-md-4 panel">
+                </div>
+              </div><br>
+
+            </div>
+          </div>
+        </div>
+          <!-- <div class="col-md-4 col-md-offset-2 panel">
+            <table>
+              <tr>
+                <th class="tittle-panelid">Time</th>
+                <th class="tittle-radiation">Radiation</th>
+                <th class="tittle-temperature">Temperature</th>
+                <th class="tittle-network">Network</th>
+                <th class="tittle-panel">Panel</th>
+                <th class="tittle-used">Used</th>
+
+              </tr>
+              <tr ng-repeat="read in reads">
+                <th class="content-time">{{read.time}}</th>
+                <th class="content-radiation">{{read.radiation | number:2 }}</th>
+                <th class="content-temperature">{{read.temperature | number:2 }}</th>
+                <th class="content-network">{{read.current.network | number:2 }}</th>
+                <th class="content-panel">{{read.current.panel | number:2 }}</th>
+                <th class="content-used">{{read.current.used | number:2 }}</th>
+              </tr>
+            </table>
+          </div>
+
+          <div class="col-md-4 panel">
+          </div> -->
+        </div>
+
+
+      </div>
+    </div>
+    <script>
+    // function Comsumtaver() {
+    //
+    //   for ("read" in "reads"){
+    //
+    //   }
+    //   return this;
+    // }
+    // document.getElementById("demo").innerHTML = myFunction();
+
+    function openMenu(evt, menuName) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("menu");
+      for (i = 0; i < x.length; i++) {
+         x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < x.length; i++) {
+         tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      }
+      document.getElementById(menuName).style.display = "block";
+      evt.currentTarget.firstElementChild.className += " w3-red";
+    }
+    </script>
+    <script>
+    // var HttpClient = function() {
+    //     this.get = function(aUrl, aCallback) {
+    //         var anHttpRequest = new XMLHttpRequest();
+    //         anHttpRequest.onreadystatechange = function() {
+    //             if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+    //                 aCallback(anHttpRequest.responseText);
+    //         }
+    //
+    //         anHttpRequest.open( "GET", aUrl, true );
+    //         anHttpRequest.send( null );
+    //     }
+    // }
+
+      var xmlhttp = new XMLHttpRequest();
+      var url = "http://solarpes.herokuapp.com/client/3006750425/mypanel/reads";
+
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+
+              var myArr = document.createElement("span");
+              myArr=JSON.parse(this.responseText);
+              getaverageused(myArr);
+              //console.log('aca sver')
+              // return (myArr)
+          }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    </script>
+    <script>
+        function getaverageused(arr){
+          var sum=0;
+          var sum1=0;
+          var sum2=0;
+          try {
+
+            // var arr=xmlhttp.onreadystatechange.myArr;
+            console.log('aca va arr:')
+            console.log(arr)
+            console.log(arr.reads[1].current.used)
+            console.log(arr.reads.length)
+            //Used
+            for (var i=0;i<arr.reads.length;i++){
+              sum+=parseFloat(arr.reads[i].current.used);
+            }
+            var aver=sum/(arr.reads.length)
+            console.log('aca va average:')
+            console.log(aver)
+            //aver=Number(document.getElementById("aver").value)
+            document.getElementById('getavera').innerHTML = aver+" Amp"
+            //network
+            for (var i=0;i<arr.reads.length;i++){
+              sum1+=parseFloat(arr.reads[i].current.network);
+            }
+            var aver2=sum1/(arr.reads.length)
+            document.getElementById('getnet').innerHTML = aver2+" Amp"
+            //panel
+            for (var i=0;i<arr.reads.length;i++){
+              sum2+=parseFloat(arr.reads[i].current.panel);
+            }
+            var aver3=sum2/(arr.reads.length)
+            document.getElementById('getpan').innerHTML = aver3+" Amp"
+            //Horas de mas consumo
+            var Mascon=0;
+            var tmasco=0;
+            for (var i=0;i<arr.reads.length;i++){
+              if (arr.reads[i].current.used>Mascon){
+                Mascon=parseFloat(arr.reads[i].current.used);
+                tmasco=arr.reads[i].time;
+              }
+            }
+            //var day=tmasco.getDay()
+            // tmasco.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+            document.getElementById('timm').innerHTML = tmasco;
+            //Temperatura
+
+            var tprom=parseInt(arr.reads[arr.reads.length-1].temperature)
+            document.getElementById('tempe').innerHTML = tprom+" °C"
+            //Potencia
+            var pot=aver3*110;
+            document.getElementById('pot').innerHTML = pot+" Watt"
+}
+          catch(TypeError) {
+            console.log("try again")
+            // cat()
+          }
+          }
+
+          //document.getElementById("getavera").innerHTML = getaverageused(xmlhttp);
+    </script>
+  </body>
+
+</html>
